@@ -9,18 +9,18 @@ const foo = (a, b) => {
 //Call end game method from Game module when game ends.
 
 const Ship = (length, hit, sunk) => {
-    const markHit = (x, y) => {
-        //Mark passed in coordinates as 'hit', sets hit to True
-        //Mark passed in number (length / index) and mark as 'hit'.
-        const coordsHit = {
-            coordinates: [x, y],
-            coordHit: true,
-        };
-        return coordsHit;
+    //Based on the given length, create an array of ship part objects that comprise the ship
+    const shipParts = [];
+    for (let i = 0; i < length; i++) {
+        const shipPart = { part: i + 1, hit: false };
+        shipParts.push(shipPart);
+    };
+    const markHit = (partNumber) => {
+        shipParts[partNumber].hit = true;
     };
     const determineSunk = () => {
-        //If all positions are hit, sunk becomes True. Loop through length, checking if all are hit.
-        //Maybe receive some sort of array of coordsHit objects, loop through it and if hit is true for all of them, then sunk is true
+        const partIsHit = (element) => element.hit;
+        shipParts.some(partIsHit);
     };
     return { length, hit, sunk, markHit, determineSunk };
 };
