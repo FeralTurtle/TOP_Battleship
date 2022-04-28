@@ -1,28 +1,26 @@
-const foo = (a, b) => {
-    return a + b;
-};
-
 //Initialize Players and Gameboards
 //Each gameboard should be populated with predetermined/hardcoded coordinates for now. Ship placement later.
 //HTML should display both player boards and render them using Gameboard object
-    //Need gameboard render method, take user attack input method in the form of a click.
+//Need gameboard render method, take user attack input method in the form of a click.
 //Call end game method from Game module when game ends.
 
 const Ship = (length, hit, sunk) => {
     //Based on the given length, create an array of ship part objects that comprise the ship
     const shipParts = [];
     for (let i = 0; i < length; i++) {
-        const shipPart = { part: i + 1, hit: false };
+        const shipPart = { part: i + 1, partHit: false };
         shipParts.push(shipPart);
     };
     const markHit = (partNumber) => {
-        shipParts[partNumber].hit = true;
+    	hit = true;
+        shipParts[partNumber - 1].partHit = true;
     };
-    const determineSunk = () => {
-        const partIsHit = (element) => element.hit;
-        shipParts.some(partIsHit);
+    const checkSunk = () => {
+        const partIsIntactTest = (part) => part.partHit == false;
+        const partIsIntact = shipParts.some(partIsIntactTest);
+        return (partIsIntact) ? false : true;
     };
-    return { length, hit, sunk, markHit, determineSunk };
+    return { length, hit, sunk, markHit, checkSunk };
 };
 
 const Gameboard = () => {
@@ -49,4 +47,4 @@ const Player = () => {
     return { ownTurn, randomPlay };
 };
 
-export { foo, Ship };
+export { Ship };
