@@ -24,9 +24,22 @@ const Ship = (length, hit, sunk) => {
 };
 
 const Gameboard = () => {
-    const placeShip = () => {
-        const newShip = Ship(4, false, false);
-        //Put ship on grid
+    const occupiedCoords = [];
+    const placeShip = (ship, x, y) => {
+        const withinGrid = ((x >= 1 && x <= 10) && (y >= 1 && y <= 10));
+        const spaceAvailable = 10 - y;
+        if (withinGrid && (ship.length <= spaceAvailable)) {
+            //start at given coordinates, then y + (ship length - 1) to get iterator length, run a for loop that amount of times starting/incrementing at y, pairing with x
+            //to make occupied coordinates to push
+            const lastYCoord = y + (ship.length - 1);
+            for (let i = y; i <= lastYCoord; i++) {
+                const coordinates = { x: x, y: i };
+                occupiedCoords.push(coordinates)
+            };
+            return 'ship placed';
+        } else {
+            return 'could not place ship';
+        };
     };
     const receiveAttack = (coords) => {
         //hit or miss
@@ -37,6 +50,7 @@ const Gameboard = () => {
     const determineAllSunk = () => {
         //Check if all ships have been sunk
     };
+    return { occupiedCoords, placeShip};
 };
 
 const Player = () => {
@@ -47,4 +61,4 @@ const Player = () => {
     return { ownTurn, randomPlay };
 };
 
-export { Ship };
+export { Ship, Gameboard };
