@@ -20,9 +20,22 @@ describe('test Ship factory function', () => {
 describe('test Gameboard factory function', () => {
     const testBoard = Gameboard();
     const testShip = Ship(2, false, false);
+    testBoard.placeShip(testShip, 2, 4);
 
     test('places ship on a valid coordinates', () => {
-        testBoard.placeShip(testShip, 2, 4);
-        expect(testBoard.occupiedCoords).toEqual([{x: 2, y: 4}, {x: 2, y: 5}]);
+        const testCoordsX = testBoard.occupiedCoords[1].x;
+        const testCoordsY = testBoard.occupiedCoords[1].y;
+        const testCoords = { x: testCoordsX, y: testCoordsY };
+        expect(testCoords).toEqual({x: 2, y: 5});
+    });
+
+    test('receives hits and marks correct ship as hit', () => {
+        const target = testBoard.receiveAttack(2, 5);
+        expect(target.part).toEqual(2);
+    });
+
+    test('records missed hits', () => {
+        testBoard.receiveAttack(2, 6);
+        expect(testBoard.missedAttacks[0]).toEqual({x: 2, y: 6});
     });
 });

@@ -5,14 +5,13 @@
 //Call end game method from Game module when game ends.
 
 const Ship = (length, hit, sunk) => {
-    //Based on the given length, create an array of ship part objects that comprise the ship
     const shipParts = [];
     for (let i = 0; i < length; i++) {
         const shipPart = { part: i + 1, partHit: false };
         shipParts.push(shipPart);
     };
     const markHit = (partNumber) => {
-    	hit = true;
+        hit = true;
         shipParts[partNumber - 1].partHit = true;
     };
     const checkSunk = () => {
@@ -20,43 +19,48 @@ const Ship = (length, hit, sunk) => {
         const partIsIntact = shipParts.some(partIsIntactTest);
         return (partIsIntact) ? false : true;
     };
-    return { length, hit, sunk, markHit, checkSunk };
+    return { length, hit, sunk, shipParts, markHit, checkSunk };
 };
 
 const Gameboard = () => {
     const occupiedCoords = [];
+    const missedAttacks = [];
     const placeShip = (ship, x, y) => {
         const withinGrid = ((x >= 1 && x <= 10) && (y >= 1 && y <= 10));
         const spaceAvailable = 10 - y;
+        let partCounter = 1;
         if (withinGrid && (ship.length <= spaceAvailable)) {
-            //start at given coordinates, then y + (ship length - 1) to get iterator length, run a for loop that amount of times starting/incrementing at y, pairing with x
-            //to make occupied coordinates to push
             const lastYCoord = y + (ship.length - 1);
             for (let i = y; i <= lastYCoord; i++) {
-                const coordinates = { x: x, y: i };
-                occupiedCoords.push(coordinates)
+                const newOccupiedCoordinates = { x: x, y: i, ship, partNumber: partCounter };
+                occupiedCoords.push(newOccupiedCoordinates);
+                partCounter++;
             };
             return 'ship placed';
         } else {
             return 'could not place ship';
         };
     };
-    const receiveAttack = (coords) => {
-        //hit or miss
-        //if hit markhit to the correct ship
-        //else if miss record coords of miss
+    const receiveAttack = (x, y) => {
+        const hitCoordinates = occupiedCoords.find(coords => (coords.x == x && coords.y == y));
+        if (hitCoordinates) {
+            const occupyingShip = hitCoordinates.ship;
+            const occupyingShipPartNum = hitCoordinates.partNumber;
+            occupyingShip.markHit(occupyingShipPartNum);
+            const hitPart = hitCoordinates.ship.shipParts.find(element => element.partHit);
+            return hitPart;
+        } else {
+            missedAttacks.push({ x, y });
+        };
     };
-    const missedAttacks = [];
     const determineAllSunk = () => {
-        //Check if all ships have been sunk
     };
-    return { occupiedCoords, placeShip};
+    return { occupiedCoords, missedAttacks, placeShip, receiveAttack };
 };
 
 const Player = () => {
     let ownTurn = false;
     const randomPlay = () => {
-        //Make a random legal move
     };
     return { ownTurn, randomPlay };
 };
