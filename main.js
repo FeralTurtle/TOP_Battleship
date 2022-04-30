@@ -4,7 +4,7 @@
 //Need gameboard render method, take user attack input method in the form of a click.
 //Call end game method from Game module when game ends.
 
-const Ship = (length, hit, sunk) => {
+const Ship = (length, hit, sunk) => { // hit and sunk don't have to be parameters, just properties.
     const shipParts = [];
     for (let i = 0; i < length; i++) {
         const shipPart = { part: i + 1, partHit: false };
@@ -32,7 +32,7 @@ const Gameboard = () => {
         if (withinGrid && (ship.length <= spaceAvailable)) {
             const lastYCoord = y + (ship.length - 1);
             for (let i = y; i <= lastYCoord; i++) {
-                const newOccupiedCoordinates = { x: x, y: i, ship, partNumber: partCounter };
+                const newOccupiedCoordinates = { x: x, y: i, occupyingShip: ship, partNumber: partCounter };
                 occupiedCoords.push(newOccupiedCoordinates);
                 partCounter++;
             };
@@ -44,18 +44,28 @@ const Gameboard = () => {
     const receiveAttack = (x, y) => {
         const hitCoordinates = occupiedCoords.find(coords => (coords.x == x && coords.y == y));
         if (hitCoordinates) {
-            const occupyingShip = hitCoordinates.ship;
+            const occupyingShip = hitCoordinates.occupyingShip;
             const occupyingShipPartNum = hitCoordinates.partNumber;
             occupyingShip.markHit(occupyingShipPartNum);
-            const hitPart = hitCoordinates.ship.shipParts.find(element => element.partHit);
+            const hitPart = hitCoordinates.occupyingShip.shipParts.find(element => element.partHit);
             return hitPart;
         } else {
             missedAttacks.push({ x, y });
         };
     };
     const determineAllSunk = () => {
+        const placedShips = [];
+        let shipIntact;
+        occupiedCoords.forEach(element => placedShips.push(element.occupyingShip));
+        placedShips.forEach(placedShip => {
+            const sunkStatus = placedShip.checkSunk();
+            if (sunkStatus == false) {
+                shipIntact = true;
+            };
+        });
+        return shipIntact ? false : true;
     };
-    return { occupiedCoords, missedAttacks, placeShip, receiveAttack };
+    return { occupiedCoords, missedAttacks, placeShip, receiveAttack, determineAllSunk };
 };
 
 const Player = () => {

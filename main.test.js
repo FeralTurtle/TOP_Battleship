@@ -39,3 +39,25 @@ describe('test Gameboard factory function', () => {
         expect(testBoard.missedAttacks[0]).toEqual({x: 2, y: 6});
     });
 });
+
+describe('test determineAllSunk()', () => {
+    test('checks if all ships on the board are sunk', () => {
+        const testBoard = Gameboard();
+        const testShip = Ship(2, false, false);
+        testBoard.placeShip(testShip, 2, 4);
+        testBoard.receiveAttack(2, 4);
+        testBoard.receiveAttack(2, 5);
+        const sunkStatus = testBoard.determineAllSunk();
+        expect(sunkStatus).toEqual(true);
+    });
+
+    test('checks if all ships on the board are not sunk', () => {
+        const testBoard = Gameboard();
+        const testShip = Ship(2, false, false);
+        testBoard.placeShip(testShip, 2, 4);
+        testBoard.receiveAttack(2, 4);
+        testBoard.receiveAttack(2, 6);
+        const sunkStatus = testBoard.determineAllSunk();
+        expect(sunkStatus).toBe(false);
+    });
+});
