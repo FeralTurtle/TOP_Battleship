@@ -1,0 +1,28 @@
+body {
+    display: grid;
+    grid-template-rows: 1fr 4fr 1fr;
+    height: 100vh;
+    margin: 0;
+    background-color: #808080;
+}
+
+h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.boards-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 12px;
+    justify-items: center;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    padding: 25px;
+}

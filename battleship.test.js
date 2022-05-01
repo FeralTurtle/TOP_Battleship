@@ -1,4 +1,4 @@
-import { Ship, Gameboard } from './main.js';
+import { Ship, Gameboard } from './battleship';
 
 describe('test Ship factory function', () => {
     const testShip = Ship(4, false, false);
