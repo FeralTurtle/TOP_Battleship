@@ -19,3 +19,9 @@ addTileCoords(boardTiles2);
 //Start game
 //Take turns attacking. Remove current event listeners and add attack event listeners this phase.
 //Reset button appears when game ends
+//5 ships: Carrier (5), Battleship (4), Cruiser (3), Submarine (3), Destroyer (2)
+//Fixed placement assortment of ships at bottom of page. Click to select, drag to grid, release to place. Click rotate button while selected to rotate..
+//..Click anywhere other than ship to deselect.
+    //Spawn ships. Make a new grid at the bottom of page. Call a render ship factory that calls the Ship factory, placing them at specific positions on the grid.
+        //Clicking rotate will switch the x and y values to render the colored ship divs horizontally instead and vice versa.
+    //Click to select.. On click, drag to grid and release. Grid coords should be updated to mark the occupied space.

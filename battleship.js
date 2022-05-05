@@ -22,18 +22,32 @@ const Gameboard = () => {
     const gridSize = 10;
     const occupiedCoords = [];
     const missedAttacks = [];
-    const placeShip = (ship, x, y) => {
+    const placeShip = (ship, direction, x, y) => {
         const withinGrid = ((x >= 1 && x <= gridSize) && (y >= 1 && y <= gridSize));
-        const spaceAvailable = gridSize - y;
+        let spaceAvailable;
         let partCounter = 1;
-        if (withinGrid && (ship.length <= spaceAvailable)) {
-            const lastYCoord = y + (ship.length - 1);
-            for (let i = y; i <= lastYCoord; i++) {
-                const newOccupiedCoordinates = { x: x, y: i, occupyingShip: ship, partNumber: partCounter };
-                occupiedCoords.push(newOccupiedCoordinates);
-                partCounter++;
+        if (direction == 'vertical') {
+            spaceAvailable = gridSize - y;
+            if (withinGrid && (ship.length <= spaceAvailable)) {
+                const lastYCoord = y + (ship.length - 1);
+                for (let i = y; i <= lastYCoord; i++) {
+                    const newOccupiedCoordinates = { x: x, y: i, occupyingShip: ship, partNumber: partCounter };
+                    occupiedCoords.push(newOccupiedCoordinates);
+                    partCounter++;
+                };
+                return 'ship placed';
             };
-            return 'ship placed';
+        } else if (direction == 'horizontal') {
+            spaceAvailable = gridSize - x;
+            if (withinGrid && (ship.length <= spaceAvailable)) {
+                const lastXCoord = x + (ship.length - 1);
+                for (let i = x; i <= lastXCoord; i++) {
+                    const newOccupiedCoordinates = { x: i, y: y, occupyingShip: ship, partNumber: partCounter };
+                    occupiedCoords.push(newOccupiedCoordinates);
+                    partCounter++;
+                };
+                return 'ship placed';
+            };
         } else {
             return 'could not place ship';
         };
@@ -94,7 +108,7 @@ const Player = () => {
     let ownTurn = false;
     const randomPlay = () => {
         //if coords is not already attacked/in occupied or missed hits array
-            //testBoard1.receiveAttack(random int 1-10, 2) 
+        //testBoard1.receiveAttack(random int 1-10, 2) 
     };
     return { ownTurn, randomPlay };
 };
