@@ -1,9 +1,3 @@
-//Initialize Players and Gameboards
-//Each gameboard should be populated with predetermined/hardcoded coordinates for now. Ship placement later.
-//HTML should display both player boards and render them using Gameboard object
-//Need gameboard render method, take user attack input method in the form of a click.
-//Call end game method from Game module when game ends.
-
 const Ship = (length) => {
     let hit = false;
     let sunk = false;
@@ -43,22 +37,17 @@ const Gameboard = () => {
         } else {
             return 'could not place ship';
         };
-        return { gridSize };
-    };
-
-    const renderGameboard = () => {
-
     };
 
     const receiveAttack = (x, y) => {
         const hitCoordinates = occupiedCoords.find(coords => (coords.x == x && coords.y == y));
-        if (hitCoordinates) {
+        if (hitCoordinates) { //Damage ship
             const occupyingShip = hitCoordinates.occupyingShip;
             const occupyingShipPartNum = hitCoordinates.partNumber;
             occupyingShip.markHit(occupyingShipPartNum);
             const hitPart = hitCoordinates.occupyingShip.shipParts.find(element => element.partHit);
             return hitPart;
-        } else {
+        } else { //Record missed hit
             missedAttacks.push({ x, y });
         };
     };
@@ -74,23 +63,40 @@ const Gameboard = () => {
         });
         return shipIntact ? false : true;
     };
-    return { occupiedCoords, missedAttacks, placeShip, receiveAttack, determineAllSunk };
+    return { gridSize, occupiedCoords, missedAttacks, placeShip, receiveAttack, determineAllSunk };
+};
+
+const renderGameboard = (board) => {
+    const { gridSize } = Gameboard();
+    for (let i = 0; i < gridSize * gridSize; i++) {
+        const newTile = document.createElement('div');
+        board.append(newTile);
+    };
+};
+
+const addTileCoords = (boardTiles) => {
+    const tilesArray = Array.from(boardTiles);
+    let xCount = 1;
+    let yCount = 1;
+    for (let i = 0; i < tilesArray.length; i++) {
+        const currentTile = tilesArray[i];
+        currentTile.x = xCount;
+        currentTile.y = yCount;
+        xCount++;
+        if (xCount == 11) {
+            yCount++;
+            xCount = 1;
+        };
+    };
 };
 
 const Player = () => {
-    //Ships already in place. Attempt to attack other board.. testboard2.receiveAttack()
-    //Switch turn. Handle in Game module probably.
     let ownTurn = false;
     const randomPlay = () => {
         //if coords is not already attacked/in occupied or missed hits array
-        //testBoard1.receiveAttack(random int 1-10, 2) 
+            //testBoard1.receiveAttack(random int 1-10, 2) 
     };
     return { ownTurn, randomPlay };
 };
 
-//If player1 turn
-//testboard2.receiveAttack
-//Else if player2 turn
-//testboard1.receiveAttack
-
-export { Ship, Gameboard, Player };
+export { Ship, Gameboard, renderGameboard, addTileCoords, Player };

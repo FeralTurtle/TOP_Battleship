@@ -1,6 +1,6 @@
 body {
     display: grid;
-    grid-template-rows: 1fr 4fr 1fr;
+    grid-template-rows: 1fr auto 5fr 1fr;
     height: 100vh;
     margin: 0;
     background-color: #808080;
@@ -25,4 +25,19 @@ h2 {
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(10, 1fr);
     padding: 25px;
+    width: 85%;
+}
+
+.board > div {
+    border: 1px solid black;
+}
+
+.game-info {
+    text-align: center;
+    margin: 0;
+}
+
+.names {
+    display: flex;
+    justify-content: space-around;
 }
