@@ -1,4 +1,6 @@
-import { Ship, Gameboard, renderGameboard, addTileCoords, Player } from './battleship.js';
+import { Ship, Player } from './battleship.js';
+import { Gameboard, renderGameboard, addTileCoords } from './gameboard.js';
+import { renderSpawnBoard, addSpawnBoardTileCoords } from './spawnBoard.js';
 
 const player1 = Player();
 const player2 = Player();
@@ -14,14 +16,43 @@ console.log(boardTiles2);
 addTileCoords(boardTiles1);
 addTileCoords(boardTiles2);
 
-//Enter player names, there's a dynamic divs
-//Place ships by typing coordinates. Add placeship event listeners during this phase.. probably good to put in some Game object, main/Game/battkeship?
-//Start game
-//Take turns attacking. Remove current event listeners and add attack event listeners this phase.
-//Reset button appears when game ends
-//5 ships: Carrier (5), Battleship (4), Cruiser (3), Submarine (3), Destroyer (2)
-//Fixed placement assortment of ships at bottom of page. Click to select, drag to grid, release to place. Click rotate button while selected to rotate..
-//..Click anywhere other than ship to deselect.
-    //Spawn ships. Make a new grid at the bottom of page. Call a render ship factory that calls the Ship factory, placing them at specific positions on the grid.
-        //Clicking rotate will switch the x and y values to render the colored ship divs horizontally instead and vice versa.
-    //Click to select.. On click, drag to grid and release. Grid coords should be updated to mark the occupied space.
+const spawnBoard = document.querySelector('.ship-spawn');
+renderSpawnBoard(spawnBoard);
+const spawnBoardTiles = document.querySelectorAll('.ship-spawn > div');
+addSpawnBoardTileCoords(spawnBoardTiles);
+console.log(spawnBoardTiles);
+
+//initializeGame()
+    //Render boards
+    //spawn enemy ships on enemy grid
+    //display ships that can be spawned at bottom of page
+        //Carrier (5), Battleship (4), Cruiser (3), Submarine (3), Destroyer (2)
+        //click place ship button, popup for userinput, ask for ship name/coords/direction
+        //render the ship with recent info
+//Game()
+    //once all ships have been placed (probably observed by the Game module)... start game
+    //the game loop happens by passing control between coupled objects
+        //player 1 turn, click enemy tile to attack
+        //computer turn, attacks player grid
+        //repeat
+    //once all ships are sunk end game
+
+//initializeGame()
+    //Render boards
+    //spawn enemy ships on enemy grid
+    //display ships that can be spawned at bottom of page
+        //while (!allShipsSpawned)
+        //Carrier (5), Battleship (4), Cruiser (3), Submarine (3), Destroyer (2)
+        //click place ship button, popup for userinput, ask for ship name/coords/direction (getter method)
+        //render the ship with recent info (render method)
+//Game()
+    //const toggleCurrentPlayer() => { player1&2.classList.toggle('current-player); player1Name.style.backgroundColor = 'rgba(255, 255, 255, 0.65)'}
+    //forEach tile, addeventlistener onclick toggleCurrentPlayer()
+    //while (!allShipsSunk)
+        //if (current player == player1)
+            //disable player 1 board
+            //attackMethod()
+            //markTile() (render method)
+        //if (current player == player2)
+            //cpu attack method
+            //markTile() (render method)
