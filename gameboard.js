@@ -60,14 +60,6 @@ const Gameboard = () => {
     return { gridSize, occupiedCoords, missedAttacks, placeShip, receiveAttack, determineAllSunk };
 };
 
-const renderGameboard = (board) => {
-    const { gridSize } = Gameboard();
-    for (let i = 0; i < gridSize * gridSize; i++) {
-        const newTile = document.createElement('div');
-        board.append(newTile);
-    };
-};
-
 const addTileCoords = (boardTiles) => {
     const tilesArray = Array.from(boardTiles);
     let xCount = 1;
@@ -84,4 +76,4 @@ const addTileCoords = (boardTiles) => {
     };
 };
 
-export { Gameboard, renderGameboard, addTileCoords };
+export { Gameboard, addTileCoords };

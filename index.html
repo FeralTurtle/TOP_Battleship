@@ -18,9 +18,33 @@
           <div class="board"></div>
           <div class="board"></div>
       </div>
-      <div class="ship-spawn-container">
-        <div class="ship-spawn">
+      <div class="ship-spawn-info">
+        <p>Ships:</p>
+        <p id="carrier">Carrier (5) - 1</p>
+        <p id="battleship">Battleship (4) - 1</p>
+        <p id="cruiser">Cruiser (3) - 1</p>
+        <p id="submarine">Submarine (3) - 1</p>
+        <p id="destroyer">Destroyer (2) - 1</p>
+        <button>Place ship</button>
         </div>
+      </div>
+      <div class="popup-form-container">
+        <span class="form-close">&times</span>
+        <form class="popup-form">
+          <label for="ship-name">Ship name:</label>
+          <input type="text" id="ship-name" autocomplete="off">
+          <label for="x-coordinates">X coordinates:</label>
+          <input type="number" id="x-coordinates" name="x-coordinates" min="1" max="10" autocomplete="off">
+          <label for="y-coordinates">Y coordinates:</label>
+          <input type="number" id="y-coordinates" name="y-coordinates" min="1" max="10" autocomplete="off">
+          <label for="direction">Direction:</label>
+          <select name="direction" id="direction" autocomplete="off">
+              <option value="none">...</option>
+              <option value="horizontal">Horizontal</option>
+              <option value="vertical">Vertical</option>
+          </select>
+        </form>
+            <button type="button" id="form-submit">Submit</button>
       </div>
     <script src="main.js" type="module"></script>
   </body>
