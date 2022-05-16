@@ -7,17 +7,17 @@ const player2 = Player();
 const board1 = Gameboard();
 const board2 = Gameboard();
 
-//Render boards / initializeGame() from battleship.js
+//Render boards / initializeGame() from battleship.js. Same scope.
 const boards = document.querySelectorAll('.board');
 boards.forEach(board => renderGameboard(board));
 const boardTiles1 = document.querySelectorAll('.boards-container > div:nth-child(1) > div');
 const boardTiles2 = document.querySelectorAll('.boards-container > div:nth-child(2) > div');
-// console.log(boardTiles1);
-// console.log(boardTiles2);
 addTileCoords(boardTiles1);
 addTileCoords(boardTiles2);
 //Spawn ships
 const spawnShipBtn = document.querySelector('button');
+//Call ship(length) 5 times, choosing a random spawn coords each time and attempting again until placed if invalid/occupied coords. Make an array of ship stock by length int.
+//While all ships haven't been spawned
 //Form
 const popupForm = document.querySelector('.popup-form-container');
 const closeFormBtn = document.querySelector('.form-close');
@@ -30,7 +30,11 @@ const direction = document.querySelector('#direction');
 
 const formSubmitBtn = document.querySelector('#form-submit');
 formSubmitBtn.addEventListener('click', () => {
+    //Call Ship(length) based on name, probably use a switch statement. Make an array of ship stock, only run switch statement if name is in array, else print already placed.
+    //Call gameboard.placeShip(ship, direction, x, y) to place the ship
+    //Call renderShip(occupiedCoords), to render the ship
 });
+
 
 //initializeGame()
     //Render boards

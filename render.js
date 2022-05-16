@@ -1,15 +1,16 @@
 import { Gameboard } from "./gameboard.js";
 
 const renderGameboard = (board) => {
-    const { gridSize } = Gameboard();
+    const { boardInfo } = Gameboard();
+    const gridSize = boardInfo.gridSize;
     for (let i = 0; i < gridSize * gridSize; i++) {
         const newTile = document.createElement('div');
         board.append(newTile);
     };
 };
 
-const renderShip = (name, x, y, direction) => {
-
+const renderShips = () => {
+    //forEach tile on gameboard, if element matches an occupiedCoords, add the .ship class to the tile element
 };
 
 export { renderGameboard };

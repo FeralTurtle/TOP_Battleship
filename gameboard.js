@@ -1,40 +1,20 @@
+import { placeShipX, placeShipY } from './placeShipHelpers.js';
+
 const Gameboard = () => {
-    const gridSize = 10;
-    const occupiedCoords = [];
-    const missedAttacks = [];
+    const boardInfo = {
+        gridSize: 10,
+        occupiedCoords: [],
+        missedAttacks: [],
+    };
     const placeShip = (ship, direction, x, y) => {
-        const withinGrid = ((x >= 1 && x <= gridSize) && (y >= 1 && y <= gridSize));
-        let spaceAvailable;
-        let partCounter = 1;
-        if (direction == 'vertical') {
-            spaceAvailable = gridSize - y;
-            if (withinGrid && (ship.length <= spaceAvailable)) {
-                const lastYCoord = y + (ship.length - 1);
-                for (let i = y; i <= lastYCoord; i++) {
-                    const newOccupiedCoordinates = { x: x, y: i, occupyingShip: ship, partNumber: partCounter };
-                    occupiedCoords.push(newOccupiedCoordinates);
-                    partCounter++;
-                };
-                return 'ship placed';
-            };
-        } else if (direction == 'horizontal') {
-            spaceAvailable = gridSize - x;
-            if (withinGrid && (ship.length <= spaceAvailable)) {
-                const lastXCoord = x + (ship.length - 1);
-                for (let i = x; i <= lastXCoord; i++) {
-                    const newOccupiedCoordinates = { x: i, y: y, occupyingShip: ship, partNumber: partCounter };
-                    occupiedCoords.push(newOccupiedCoordinates);
-                    partCounter++;
-                };
-                return 'ship placed';
-            };
-        } else {
-            return 'could not place ship';
+        if (direction == 'horizontal') {
+            return placeShipX(boardInfo, ship, x, y);
+        } else if (direction == 'vertical') {
+            return placeShipY(boardInfo, ship, x, y);
         };
     };
-
     const receiveAttack = (x, y) => {
-        const hitCoordinates = occupiedCoords.find(coords => (coords.x == x && coords.y == y));
+        const hitCoordinates = boardInfo.occupiedCoords.find(coords => (coords.x == x && coords.y == y));
         if (hitCoordinates) { //Damage ship
             const occupyingShip = hitCoordinates.occupyingShip;
             const occupyingShipPartNum = hitCoordinates.partNumber;
@@ -42,13 +22,13 @@ const Gameboard = () => {
             const hitPart = hitCoordinates.occupyingShip.shipParts.find(element => element.partHit);
             return hitPart;
         } else { //Record missed hit
-            missedAttacks.push({ x, y });
+            boardInfo.missedAttacks.push({ x, y });
         };
     };
     const determineAllSunk = () => {
         const placedShips = [];
         let shipIntact;
-        occupiedCoords.forEach(element => placedShips.push(element.occupyingShip));
+        boardInfo.occupiedCoords.forEach(element => placedShips.push(element.occupyingShip));
         placedShips.forEach(placedShip => {
             const sunkStatus = placedShip.checkSunk();
             if (sunkStatus == false) {
@@ -57,7 +37,7 @@ const Gameboard = () => {
         });
         return shipIntact ? false : true;
     };
-    return { gridSize, occupiedCoords, missedAttacks, placeShip, receiveAttack, determineAllSunk };
+    return { boardInfo, placeShip, receiveAttack, determineAllSunk };
 };
 
 const addTileCoords = (boardTiles) => {

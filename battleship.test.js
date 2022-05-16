@@ -1,7 +1,12 @@
-import { Ship } from './battleship.js';
+import { makeShipByName } from './battleship.js';
+
+test('test get ship by name function', () => {
+    const testShip = makeShipByName('submarine');
+    expect(testShip.length).toBe(3);
+});
 
 describe('test Ship factory function', () => {
-    const testShip = Ship(4);
+    const testShip = makeShipByName('battleship');
 
     test(`determine if ship is considered intact if there's at least one part intact`, () => {
         testShip.markHit(2);
