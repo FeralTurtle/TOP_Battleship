@@ -1,23 +1,15 @@
 import { Ship, Player } from './battleship.js';
-import { Gameboard, addTileCoords } from './gameboard.js';
-import { renderGameboard } from './render.js';
+import { Gameboard } from './gameboard.js';
+import { initializeGame } from './initializeGame.js';
 
 const player1 = Player();
 const player2 = Player();
 const board1 = Gameboard();
 const board2 = Gameboard();
 
-//Render boards / initializeGame() from battleship.js. Same scope.
-const boards = document.querySelectorAll('.board');
-boards.forEach(board => renderGameboard(board));
-const boardTiles1 = document.querySelectorAll('.boards-container > div:nth-child(1) > div');
-const boardTiles2 = document.querySelectorAll('.boards-container > div:nth-child(2) > div');
-addTileCoords(boardTiles1);
-addTileCoords(boardTiles2);
-//Spawn ships
+initializeGame();
 const spawnShipBtn = document.querySelector('button');
-//Call ship(length) 5 times, choosing a random spawn coords each time and attempting again until placed if invalid/occupied coords. Make an array of ship stock by length int.
-//While all ships haven't been spawned
+//While all ships haven't been spawned..
 //Form
 const popupForm = document.querySelector('.popup-form-container');
 const closeFormBtn = document.querySelector('.form-close');
