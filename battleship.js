@@ -22,22 +22,32 @@ const makeShipByName = (name) => {
     let newShip;
     switch (name) {
         case 'carrier':
-            newShip = Ship(name, 5);
-            break;
+            return newShip = Ship(name, 5);
         case 'battleship':
-            newShip = Ship(name, 4);
-            break;
+            return newShip = Ship(name, 4);
         case 'cruiser':
-            newShip = Ship(name, 3);
-            break;
+            return newShip = Ship(name, 3);
         case 'submarine':
-            newShip = Ship(name, 3);
-            break;
+            return newShip = Ship(name, 3);
         case 'destroyer':
-            newShip = Ship(name, 2);
-            break;
+            return newShip = Ship(name, 2);
     };
-    return newShip;
+};
+
+const isInArray = (array, element) => {
+    const index = array.indexOf(element);
+    if (index == 1) {
+        return true;
+    } else if (index == -1) {
+        return false;
+    };
+};
+
+const removeArrayElementByValue = (array, value) => {
+    const elementIndex = array.indexOf(value);
+    if (elementIndex) {
+        array.splice(elementIndex, 1);
+    };
 };
 
 const Player = () => {
@@ -49,4 +59,4 @@ const Player = () => {
     return { ownTurn, randomPlay };
 };
 
-export { Ship, Player, makeShipByName };
+export { Ship, Player, makeShipByName, isInArray, removeArrayElementByValue };

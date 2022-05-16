@@ -1,4 +1,4 @@
-import { Ship, Player } from './battleship.js';
+import { Ship, Player, makeShipByName, isInArray, removeArrayElementByValue, isInArray } from './battleship.js';
 import { Gameboard } from './gameboard.js';
 import { initializeGame } from './initializeGame.js';
 
@@ -15,14 +15,22 @@ const popupForm = document.querySelector('.popup-form-container');
 const closeFormBtn = document.querySelector('.form-close');
 spawnShipBtn.addEventListener('click', () => popupForm.style.display = 'grid');
 closeFormBtn.addEventListener('click', () => popupForm.style.display = 'none');
-const shipName = document.querySelector('#ship-name');
-const xCoord = document.querySelector('#x-coordinates');
-const yCoord = document.querySelector('#y-coordinates');
-const direction = document.querySelector('#direction');
 
 const formSubmitBtn = document.querySelector('#form-submit');
 formSubmitBtn.addEventListener('click', () => {
-    //Call Ship(length) based on name, probably use a switch statement. Make an array of ship stock, only run switch statement if name is in array, else print already placed.
+    const shipName = document.querySelector('#ship-name');
+    const xCoord = document.querySelector('#x-coordinates');
+    const yCoord = document.querySelector('#y-coordinates');
+    const direction = document.querySelector('#direction');
+    //Spawn ship
+    const shipStock = ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer'];
+    const inArray = isInArray(shipStock, shipName.value);
+    if (inArray) {
+        makeShipByName(shipName.value);
+        removeArrayElementByValue(shipStock, shipName.value);
+    } else {
+        console.log('could not spawn ship');
+    };
     //Call gameboard.placeShip(ship, direction, x, y) to place the ship
     //Call renderShip(occupiedCoords), to render the ship
 });
