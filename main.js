@@ -1,38 +1,40 @@
-import { Ship, Player, makeShipByName, isInArray, removeArrayElementByValue, isInArray } from './battleship.js';
+import { Ship, Player } from './battleship.js';
 import { Gameboard } from './gameboard.js';
 import { initializeGame } from './initializeGame.js';
+import { spawnShip } from './spawnShip.js';
 
 const player1 = Player();
 const player2 = Player();
 const board1 = Gameboard();
 const board2 = Gameboard();
 
-initializeGame();
-const spawnShipBtn = document.querySelector('button');
-//While all ships haven't been spawned..
-//Form
-const popupForm = document.querySelector('.popup-form-container');
-const closeFormBtn = document.querySelector('.form-close');
-spawnShipBtn.addEventListener('click', () => popupForm.style.display = 'grid');
-closeFormBtn.addEventListener('click', () => popupForm.style.display = 'none');
+const checkifEmptyStock = (stockArray) => {
+    console.log(`array length: ${stockArray.length}`);
+    return (stockArray.length == 0) ? true : false;
+};
 
+//Page setup
+initializeGame();
+const computerStock = ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer'];
+// const computerStock = ['carrier'];
+// spawnComputerShips(board2, computerStock);
+//While all ships haven't been spawned.. While loop
 const formSubmitBtn = document.querySelector('#form-submit');
+// const shipStock = ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer'];
+const shipStock = ['carrier'];
+let stockEmpty = false;
 formSubmitBtn.addEventListener('click', () => {
-    const shipName = document.querySelector('#ship-name');
-    const xCoord = document.querySelector('#x-coordinates');
-    const yCoord = document.querySelector('#y-coordinates');
-    const direction = document.querySelector('#direction');
-    //Spawn ship
-    const shipStock = ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer'];
-    const inArray = isInArray(shipStock, shipName.value);
-    if (inArray) {
-        makeShipByName(shipName.value);
-        removeArrayElementByValue(shipStock, shipName.value);
-    } else {
-        console.log('could not spawn ship');
+    spawnShip(board1, shipStock);
+    console.log(board1.boardInfo.occupiedCoords);
+    console.log(shipStock);
+    stockEmpty = checkifEmptyStock(shipStock);
+    if (stockEmpty) {
+        //change text to 'player 1 turn', add board click functionality for attacking other player. basically start game.
+        const gameInfoText = document.querySelector('.game-info');
+        gameInfoText.textContent = 'Player 1 turn';
+        console.log('STOCK EMPTY');
+        // console.log(computerStock);
     };
-    //Call gameboard.placeShip(ship, direction, x, y) to place the ship
-    //Call renderShip(occupiedCoords), to render the ship
 });
 
 

@@ -1,4 +1,5 @@
 const isPathBlockedX = (boardInfo, ship, x, y) => {
+    console.log('isPathBlockedX');
     const lastXCoord = x + (ship.length - 1);
     for (let i = x; i <= lastXCoord; i++) {
         const spawnCoords = { x: i, y: y };
@@ -8,6 +9,7 @@ const isPathBlockedX = (boardInfo, ship, x, y) => {
 };
 
 const buildShipX = (boardInfo, ship, x, y) => {
+    console.log('buildShipX');
     const lastXCoord = x + (ship.length - 1);
     let partCounter = 1;
     for (let i = x; i <= lastXCoord; i++) {
@@ -18,10 +20,11 @@ const buildShipX = (boardInfo, ship, x, y) => {
 };
 
 const placeShipX = (boardInfo, ship, x, y) => {
+    console.log('placeShipX()');
     const withinGrid = ((x >= 1 && x <= boardInfo.gridSize) && (y >= 1 && y <= boardInfo.gridSize));
     const spaceAvailable = boardInfo.gridSize - x;
     if (withinGrid && (ship.length <= spaceAvailable)) {
-        const pathBlocked = isPathBlockedX(ship, x, y);
+        const pathBlocked = isPathBlockedX(boardInfo, ship, x, y);
         if (!pathBlocked) {
             buildShipX(boardInfo, ship, x, y);
             return 'ship placed';
@@ -61,7 +64,7 @@ const placeShipY = (boardInfo, ship, x, y) => {
     const withinGrid = ((x >= 1 && x <= boardInfo.gridSize) && (y >= 1 && y <= boardInfo.gridSize));
     const spaceAvailable = boardInfo.gridSize - y;
     if (withinGrid && (ship.length <= spaceAvailable)) {
-        const pathBlocked = isPathBlockedY(ship, x, y);
+        const pathBlocked = isPathBlockedY(boardInfo, ship, x, y);
         // console.log(`occupiedCoords: ${occupiedCoords}`);
         // console.log(`path blocked: ${pathBlocked}`);
         if (!pathBlocked) { //Place ship along path.

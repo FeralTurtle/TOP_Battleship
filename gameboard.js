@@ -7,9 +7,12 @@ const Gameboard = () => {
         missedAttacks: [],
     };
     const placeShip = (ship, direction, x, y) => {
+        console.log('placeShip()');
         if (direction == 'horizontal') {
+            console.log(`placing horizontal ship`);
             return placeShipX(boardInfo, ship, x, y);
         } else if (direction == 'vertical') {
+            console.log(`placing veritcal ship`);
             return placeShipY(boardInfo, ship, x, y);
         };
     };

@@ -1,4 +1,5 @@
 const Ship = (name, length) => {
+    console.log('Ship()');
     let hit = false;
     let sunk = false;
     const shipParts = [];
@@ -19,6 +20,7 @@ const Ship = (name, length) => {
 };
 
 const makeShipByName = (name) => {
+    console.log('makeShipByName()');
     let newShip;
     switch (name) {
         case 'carrier':
@@ -35,19 +37,48 @@ const makeShipByName = (name) => {
 };
 
 const isInArray = (array, element) => {
+    console.log('isInArray()');
     const index = array.indexOf(element);
-    if (index == 1) {
+    console.log(`index: ${index}`);
+    if (index >= 0) {
         return true;
     } else if (index == -1) {
         return false;
     };
 };
 
+const updateStockText = (name) => {
+    switch (name) {
+        case 'carrier':
+            const carrierText = document.querySelector('#carrier');
+            carrierText.textContent = 'Carrier (5) - 0';
+            break;
+        case 'battleship':
+            const battleshipText = document.querySelector('#battleship');
+            battleshipText.textContent = 'Battleship (5) - 0';
+            break;
+        case 'cruiser':
+            const cruiserText = document.querySelector('#cruiser');
+            cruiserText.textContent = 'Cruiser (5) - 0';
+            break;
+        case 'submarine':
+            const submarineText = document.querySelector('#submarine');
+            submarineText.textContent = 'Submarine (5) - 0';
+            break;
+        case 'destroyer':
+            const destroyerText = document.querySelector('#destroyer');
+            destroyerText.textContent = 'Destroyer (5) - 0';
+            break;
+    };
+};
+
 const removeArrayElementByValue = (array, value) => {
     const elementIndex = array.indexOf(value);
-    if (elementIndex) {
+    console.log(`removing ${value} of index ${elementIndex} from array...`);
+    if (elementIndex >= 0) {
         array.splice(elementIndex, 1);
     };
+    console.log(`resulting array: ${array}`);
 };
 
 const Player = () => {
@@ -59,4 +90,4 @@ const Player = () => {
     return { ownTurn, randomPlay };
 };
 
-export { Ship, Player, makeShipByName, isInArray, removeArrayElementByValue };
+export { Ship, Player, makeShipByName, isInArray, updateStockText, removeArrayElementByValue };
