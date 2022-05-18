@@ -10,7 +10,6 @@ const renderGameboard = (board) => {
 };
 
 const renderShips = (board, boardTiles) => {
-    console.log('renderShips()');
     const occupiedCoords = board.boardInfo.occupiedCoords;
     //forEach tile on gameboard, if element matches an occupiedCoords, add the .ship class to the tile element
     for (let i = 0; i < boardTiles.length; i++) {

@@ -22,7 +22,7 @@ const clearShipStockText = () => {
     while (shipSpawnInfo.firstChild) {
         shipSpawnInfo.firstChild.remove();
     };
-}
+};
 
 const player1 = Player();
 const player2 = Player();
@@ -53,7 +53,22 @@ formSubmitBtn.addEventListener('click', () => {
         gameInfoText.textContent = 'Player 1 turn';
         player1Name.classList.toggle('current-player');
         //add board click functionality for attacking other player. basically start game.
-
+        const boardTiles2 = document.querySelectorAll('.player2-board > div');
+        boardTiles2.forEach(tile => {
+            tile.classList.add('active')
+            tile.addEventListener('click', () => {
+                const x = tile.x;
+                const y = tile.y;
+                const hitOrMiss = board2.receiveAttack(x, y);
+                console.log(`hitOrMiss: ${hitOrMiss}`);
+                if (hitOrMiss == 'hit') {
+                    tile.classList.add('hit');
+                } else if (hitOrMiss == 'miss') {
+                    tile.classList.add('miss');
+                };
+            });
+        });
+        // boardTiles2.forEach(tile => console.log(tile));
     };
 });
 

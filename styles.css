@@ -64,6 +64,13 @@ h2 {
     border: 1px solid black;
 }
 
+.active {
+}
+
+.active:hover{
+    background-color: rgba(1,1,1,0.1);
+}
+
 /* Ship spawn info */
 .ship-spawn-info {
     display: flex;
