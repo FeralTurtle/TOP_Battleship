@@ -1,7 +1,7 @@
 import { Ship, Player } from './battleship.js';
 import { Gameboard } from './gameboard.js';
 import { initializeGame } from './initializeGame.js';
-import { spawnShip } from './spawnShip.js';
+import { spawnShip, spawnComputerShips } from './spawnShip.js';
 
 const player1 = Player();
 const player2 = Player();
@@ -17,7 +17,7 @@ const checkifEmptyStock = (stockArray) => {
 initializeGame();
 const computerStock = ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer'];
 // const computerStock = ['carrier'];
-// spawnComputerShips(board2, computerStock);
+spawnComputerShips(board2, computerStock);
 //While all ships haven't been spawned.. While loop
 const formSubmitBtn = document.querySelector('#form-submit');
 // const shipStock = ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer'];
@@ -33,7 +33,6 @@ formSubmitBtn.addEventListener('click', () => {
         const gameInfoText = document.querySelector('.game-info');
         gameInfoText.textContent = 'Player 1 turn';
         console.log('STOCK EMPTY');
-        // console.log(computerStock);
     };
 });
 

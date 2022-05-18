@@ -2,11 +2,11 @@ import { makeShipByName, isInArray, updateStockText, removeArrayElementByValue }
 import { Gameboard } from './gameboard.js';
 import { renderShips } from './render.js';
 
-function getRandomInt(min, max) {
+const getRandomInt = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
 const getRandomDirection = () => {
     const randomInt = getRandomInt(0, 1);
@@ -47,24 +47,49 @@ const spawnShip = (board, shipStock) => {
     renderShips(board, boardTiles1);
 };
 
-// const spawnComputerShips = (board, shipStock) => {
-//     let ship;
-//     const inArray = isInArray(shipStock, shipName.value);
-//     if (inArray) {
-//         ship = makeShipByName(shipName.value);
-//         removeArrayElementByValue(shipStock, shipName.value);
-//     } else {
-//         console.log('could not spawn ship');
-//         return;
-//     };
-//     const direction = getRandomDirection();
-//     const x = getRandomInt(0, 10);
-//     const y = getRandomInt(0, 10);
+const spawnComputerShips = (board, shipStock) => {
+    console.log('spawnComputerShips()');
+    console.log(shipStock.length);
+    while (!shipStock.length == 0) {
+        const currentShipName = shipStock[0];
+        console.log(`currentComputerShipName: ${currentShipName}`);
+        let ship;
+        const inArray = isInArray(shipStock, currentShipName);
+        if (inArray) { //removing elements causes discrepency with for loop count
+            ship = makeShipByName(currentShipName);
+            removeArrayElementByValue(shipStock, currentShipName);
+        } else {
+            console.log('could not spawn ship. not in array.');
+            return;
+        };
+        let direction = getRandomDirection();
+        let x = getRandomInt(1, 10);
+        console.log(`x: ${x}`);
+        let y = getRandomInt(1, 10);
+        console.log(`y: ${y}`);
 
-//     board.placeShip(ship, direction, x, y);
+        console.log('ship');
+        console.log(ship);
+        //retry placement
+        let shipPlacement = board.placeShip(ship, direction, x, y);
+        console.log(`shipPlacement: ${shipPlacement}`);
+        if (shipPlacement == 'could not place ship') {
+            while (shipPlacement == 'could not place ship') {
+                console.log('RETRY:')
+                direction = getRandomDirection();
+                x = getRandomInt(1, 10);
+                console.log(`x: ${x}`);
+                y = getRandomInt(1, 10);
+                console.log(`y: ${y}`);
+                shipPlacement = board.placeShip(ship, direction, x, y);
+            };
+            shipPlacement == 'ship placed';
+        };
+        const boardTiles2 = document.querySelectorAll('.boards-container > div:nth-child(2) > div');
+        renderShips(board, boardTiles2);
+        console.log('end ship stock length');
+        console.log(shipStock.length);
+    };
+};
 
-//     const boardTiles2 = document.querySelectorAll('.boards-container > div:nth-child(2) > div');
-//     renderShips(board, boardTiles2);
-// };
-
-export { spawnShip };
+export { spawnShip, spawnComputerShips };

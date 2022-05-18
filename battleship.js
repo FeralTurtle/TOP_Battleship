@@ -1,5 +1,4 @@
 const Ship = (name, length) => {
-    console.log('Ship()');
     let hit = false;
     let sunk = false;
     const shipParts = [];
@@ -20,7 +19,6 @@ const Ship = (name, length) => {
 };
 
 const makeShipByName = (name) => {
-    console.log('makeShipByName()');
     let newShip;
     switch (name) {
         case 'carrier':
@@ -37,9 +35,7 @@ const makeShipByName = (name) => {
 };
 
 const isInArray = (array, element) => {
-    console.log('isInArray()');
     const index = array.indexOf(element);
-    console.log(`index: ${index}`);
     if (index >= 0) {
         return true;
     } else if (index == -1) {
@@ -74,11 +70,9 @@ const updateStockText = (name) => {
 
 const removeArrayElementByValue = (array, value) => {
     const elementIndex = array.indexOf(value);
-    console.log(`removing ${value} of index ${elementIndex} from array...`);
     if (elementIndex >= 0) {
         array.splice(elementIndex, 1);
     };
-    console.log(`resulting array: ${array}`);
 };
 
 const Player = () => {

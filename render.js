@@ -11,7 +11,6 @@ const renderGameboard = (board) => {
 
 const renderShips = (board, boardTiles) => {
     console.log('renderShips()');
-    console.log(board);
     const occupiedCoords = board.boardInfo.occupiedCoords;
     //forEach tile on gameboard, if element matches an occupiedCoords, add the .ship class to the tile element
     for (let i = 0; i < boardTiles.length; i++) {
@@ -21,8 +20,6 @@ const renderShips = (board, boardTiles) => {
             const occupiedCoord = occupiedCoords[j];
             const occupiedCoordinates = {x: occupiedCoord.x, y: occupiedCoord.y };
             if ((boardCoords.x == occupiedCoordinates.x) && (boardCoords.y == occupiedCoordinates.y)) {
-                console.log('conditional');
-                console.log(boardCoords == occupiedCoordinates);
                 boardTile.classList.add('ship');
             };
         };
