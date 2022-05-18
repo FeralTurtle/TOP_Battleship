@@ -1,7 +1,7 @@
 import { Player } from './battleship.js';
 import { Gameboard } from './gameboard.js';
 import { initializeGame } from './initializeGame.js';
-import { spawnShip, spawnComputerShips } from './spawnShip.js';
+import { spawnShip, spawnComputerShips, getRandomInt } from './spawnShip.js';
 
 const checkifEmptyStock = (stockArray) => {
     return (stockArray.length == 0) ? true : false;
@@ -24,6 +24,35 @@ const clearShipStockText = () => {
     };
 };
 
+const markHitOrMiss = (tile, hitOrMiss) => {
+    if (hitOrMiss == 'hit') {
+        tile.classList.add('hit');
+    } else if (hitOrMiss == 'miss') {
+        tile.classList.add('miss');
+    };
+}
+
+const markPlayer2Grid = (tile) => {
+    const x = tile.x;
+    const y = tile.y;
+    const hitOrMiss = board2.receiveAttack(x, y);
+    markHitOrMiss(tile, hitOrMiss);
+};
+
+const markPlayer1Grid = () => {
+    const player1BoardTiles = document.querySelectorAll('.player1-board > div');
+    const player1BoardTilesArray = Array.from(player1BoardTiles);
+    const randomInt = getRandomInt(1,100);
+    console.log(`randomInt: ${randomInt}`);
+    const target = player1BoardTilesArray[randomInt];
+    console.log('target:');
+    console.log(target);
+    const x = target.x;
+    const y = target.y;
+    const hitOrMiss = board1.receiveAttack(x,y);
+    markHitOrMiss(target, hitOrMiss);
+};
+
 const player1 = Player();
 const player2 = Player();
 const board1 = Gameboard();
@@ -38,8 +67,8 @@ const computerStock = ['carrier', 'battleship', 'cruiser', 'submarine', 'destroy
 spawnComputerShips(board2, computerStock);
 
 const formSubmitBtn = document.querySelector('#form-submit');
-// const shipStock = ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer'];
-const shipStock = ['carrier'];
+const shipStock = ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer'];
+// const shipStock = ['carrier'];
 let stockEmpty = false;
 formSubmitBtn.addEventListener('click', () => {
     spawnShip(board1, shipStock);
@@ -57,18 +86,14 @@ formSubmitBtn.addEventListener('click', () => {
         boardTiles2.forEach(tile => {
             tile.classList.add('active')
             tile.addEventListener('click', () => {
-                const x = tile.x;
-                const y = tile.y;
-                const hitOrMiss = board2.receiveAttack(x, y);
-                console.log(`hitOrMiss: ${hitOrMiss}`);
-                if (hitOrMiss == 'hit') {
-                    tile.classList.add('hit');
-                } else if (hitOrMiss == 'miss') {
-                    tile.classList.add('miss');
+                markPlayer2Grid(tile);
+                markPlayer1Grid();
+                const isAllSunk = board2.determineAllSunk();
+                if (isAllSunk) {
+                    gameInfoText.textContent = 'Player 1 wins!';
                 };
             });
         });
-        // boardTiles2.forEach(tile => console.log(tile));
     };
 });
 

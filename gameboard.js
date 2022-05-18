@@ -15,14 +15,10 @@ const Gameboard = () => {
     };
     const receiveAttack = (x, y) => {
         const hitCoordinates = boardInfo.occupiedCoords.find(coords => (coords.x == x && coords.y == y));
-        console.log('hitCoordinates:');
-        console.log(hitCoordinates);
         if (hitCoordinates) { //Damage ship
             const occupyingShip = hitCoordinates.occupyingShip;
             const occupyingShipPartNum = hitCoordinates.partNumber;
             occupyingShip.markHit(occupyingShipPartNum);
-            console.log('occupyingShip');
-            console.log(occupyingShip);
             const hitPart = hitCoordinates.occupyingShip.shipParts.find(element => element.partHit);
             return 'hit';
         } else { //Record missed hit

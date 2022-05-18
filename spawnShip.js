@@ -71,4 +71,4 @@ const spawnComputerShips = (board, shipStock) => {
     };
 };
 
-export { spawnShip, spawnComputerShips };
+export { spawnShip, spawnComputerShips, getRandomInt };
