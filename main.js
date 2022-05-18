@@ -1,38 +1,59 @@
-import { Ship, Player } from './battleship.js';
+import { Player } from './battleship.js';
 import { Gameboard } from './gameboard.js';
 import { initializeGame } from './initializeGame.js';
 import { spawnShip, spawnComputerShips } from './spawnShip.js';
+
+const checkifEmptyStock = (stockArray) => {
+    return (stockArray.length == 0) ? true : false;
+};
+
+const toggleCurrentPlayer = () => {
+    player1Name.classList.toggle('current-player');
+    player2Name.classList.toggle('current-player');
+    if (currentPlayer == player1) {
+        currentPlayer = player2;
+    } else if (currentPlayer == player2) {
+        currentPlayer = player1;
+    };
+};
+
+const clearShipStockText = () => {
+    const shipSpawnInfo = document.querySelector('.ship-spawn-info');
+    while (shipSpawnInfo.firstChild) {
+        shipSpawnInfo.firstChild.remove();
+    };
+}
 
 const player1 = Player();
 const player2 = Player();
 const board1 = Gameboard();
 const board2 = Gameboard();
-
-const checkifEmptyStock = (stockArray) => {
-    console.log(`array length: ${stockArray.length}`);
-    return (stockArray.length == 0) ? true : false;
-};
+const player1Name = document.querySelector('.player1-name');
+const player2Name = document.querySelector('.player2-name');
+const popupForm = document.querySelector('.popup-form-container');
 
 //Page setup
 initializeGame();
 const computerStock = ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer'];
-// const computerStock = ['carrier'];
 spawnComputerShips(board2, computerStock);
-//While all ships haven't been spawned.. While loop
+
 const formSubmitBtn = document.querySelector('#form-submit');
 // const shipStock = ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer'];
 const shipStock = ['carrier'];
 let stockEmpty = false;
 formSubmitBtn.addEventListener('click', () => {
     spawnShip(board1, shipStock);
-    console.log(board1.boardInfo.occupiedCoords);
-    console.log(shipStock);
     stockEmpty = checkifEmptyStock(shipStock);
     if (stockEmpty) {
-        //change text to 'player 1 turn', add board click functionality for attacking other player. basically start game.
+        popupForm.style.display = 'none';
+        clearShipStockText();
+        //Set player 1 as current player
+        let currentPlayer = player1;
         const gameInfoText = document.querySelector('.game-info');
         gameInfoText.textContent = 'Player 1 turn';
-        console.log('STOCK EMPTY');
+        player1Name.classList.toggle('current-player');
+        //add board click functionality for attacking other player. basically start game.
+
     };
 });
 
@@ -47,7 +68,7 @@ formSubmitBtn.addEventListener('click', () => {
         //render the ship with recent info (render method)
 //Game()
     //const toggleCurrentPlayer() => { player1&2.classList.toggle('current-player); player1Name.style.backgroundColor = 'rgba(255, 255, 255, 0.65)'}
-    //forEach tile, addeventlistener onclick toggleCurrentPlayer()
+    //forEach tile, addeventlistener onclick toggleCurrentPlayer(), receiveHit();
     //while (!allShipsSunk)
         //if (current player == player1)
             //disable player 1 board

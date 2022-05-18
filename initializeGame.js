@@ -1,4 +1,4 @@
-import { Gameboard, addTileCoords } from './gameboard.js';
+import { addTileCoords } from './gameboard.js';
 import { renderGameboard } from './render.js';
 
 const addPageBtnEvents = () => {

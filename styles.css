@@ -6,6 +6,11 @@ body {
     background-color: #e6e6e6;
 }
 
+/* Player */
+.current-player {
+    background-color: rgba(1,1,1,0.25);
+}
+
 /* Ship */
 .ship {
     background-color: #a6a6a6;

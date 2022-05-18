@@ -1,16 +1,13 @@
 const isPathBlockedX = (boardInfo, ship, x, y) => {
-    console.log('isPathBlockedX');
     const lastXCoord = x + (ship.length - 1);
     for (let i = x; i <= lastXCoord; i++) {
         const spawnCoords = { x: i, y: y };
         const match = (element) => ((element.x == spawnCoords.x) && (element.y == spawnCoords.y));
-        console.log(`isPathBlockedX return value: ${boardInfo.occupiedCoords.some(match)}`);
         return boardInfo.occupiedCoords.some(match);
     };
 };
 
 const buildShipX = (boardInfo, ship, x, y) => {
-    console.log('buildShipX');
     const lastXCoord = x + (ship.length - 1);
     let partCounter = 1;
     for (let i = x; i <= lastXCoord; i++) {
@@ -21,7 +18,6 @@ const buildShipX = (boardInfo, ship, x, y) => {
 };
 
 const placeShipX = (boardInfo, ship, x, y) => {
-    console.log('placeShipX()');
     const withinGrid = ((x >= 1 && x <= boardInfo.gridSize) && (y >= 1 && y <= boardInfo.gridSize));
     const spaceAvailable = boardInfo.gridSize - x;
     if (withinGrid && (ship.length <= spaceAvailable)) {
@@ -30,11 +26,9 @@ const placeShipX = (boardInfo, ship, x, y) => {
             buildShipX(boardInfo, ship, x, y);
             return 'ship placed';
         } else if (pathBlocked) {
-            console.log('PATH BLOCKED');
             return 'could not place ship';
         };
     } else {
-        console.log('placeShipX COULD NOT place');
         return 'could not place ship';
     };
 };
