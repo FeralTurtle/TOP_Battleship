@@ -1,22 +1,5 @@
-import { makeShipByName } from './battleship.js';
+import { Ship, makeShipByName } from './battleship.js';
 import { Gameboard } from './gameboard.js';
-
-
-// describe('test gameboard attack response', () => {
-//     const testBoard = Gameboard();
-//     const testShip = Ship(2);
-//     testBoard.placeShip(testShip, 'vertical', 2, 4);
-
-//     test('receives hits and marks correct ship as hit', () => {
-//         const target = testBoard.receiveAttack(2, 5);
-//         expect(target.part).toEqual(2);
-//     });
-
-//     test('records missed hits', () => {
-//         testBoard.receiveAttack(2, 6);
-//         expect(testBoard.missedAttacks[0]).toEqual({x: 2, y: 6});
-//     });
-// });
 
 describe('test ship placement method', () => {
     test('places ship vertically on a valid coordinates', () => {
@@ -40,24 +23,40 @@ describe('test ship placement method', () => {
     });
 });
 
-// describe('test determineAllSunk()', () => {
-//     test('checks if all ships on the board are sunk', () => {
-//         const testBoard = Gameboard();
-//         const testShip = Ship(2);
-//         testBoard.placeShip(testShip, 'vertical', 2, 4);
-//         testBoard.receiveAttack(2, 4);
-//         testBoard.receiveAttack(2, 5);
-//         const sunkStatus = testBoard.determineAllSunk();
-//         expect(sunkStatus).toEqual(true);
-//     });
+describe('test determineAllSunk()', () => {
+    test('checks if all ships on the board are sunk', () => {
+        const testBoard = Gameboard();
+        const testShip = Ship('foo', 2);
+        testBoard.placeShip(testShip, 'vertical', 2, 4);
+        testBoard.receiveAttack(2, 4);
+        testBoard.receiveAttack(2, 5);
+        const sunkStatus = testBoard.determineAllSunk();
+        expect(sunkStatus).toEqual(true);
+    });
 
-//     test('checks if all ships on the board are not sunk', () => {
-//         const testBoard = Gameboard();
-//         const testShip = Ship(2);
-//         testBoard.placeShip(testShip, 'vertical', 2, 4);
-//         testBoard.receiveAttack(2, 4);
-//         testBoard.receiveAttack(2, 6);
-//         const sunkStatus = testBoard.determineAllSunk();
-//         expect(sunkStatus).toBe(false);
-//     });
-// });
+    test('checks if all ships on the board are not sunk', () => {
+        const testBoard = Gameboard();
+        const testShip = Ship('bar', 2);
+        testBoard.placeShip(testShip, 'vertical', 2, 4);
+        testBoard.receiveAttack(2, 4);
+        testBoard.receiveAttack(2, 6);
+        const sunkStatus = testBoard.determineAllSunk();
+        expect(sunkStatus).toBe(false);
+    });
+});
+
+describe('test gameboard attack response', () => {
+    const testBoard = Gameboard();
+    const testShip = Ship('foobar', 2);
+    testBoard.placeShip(testShip, 'vertical', 2, 4);
+
+    test('receives hits', () => {
+        const result = testBoard.receiveAttack(2, 5);
+        expect(result).toEqual('hit');
+    });
+
+    test('records missed hits', () => {
+        const result = testBoard.receiveAttack(2, 6);
+        expect(result).toEqual('miss');
+    });
+});
