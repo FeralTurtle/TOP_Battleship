@@ -9,7 +9,7 @@ const renderGameboard = (board) => {
     };
 };
 
-const renderShips = (board, boardTiles) => {
+const renderShips = (board, boardTiles, player) => {
     const occupiedCoords = board.boardInfo.occupiedCoords;
     //forEach tile on gameboard, if element matches an occupiedCoords, add the .ship class to the tile element
     for (let i = 0; i < boardTiles.length; i++) {
@@ -19,7 +19,9 @@ const renderShips = (board, boardTiles) => {
             const occupiedCoord = occupiedCoords[j];
             const occupiedCoordinates = {x: occupiedCoord.x, y: occupiedCoord.y };
             if ((boardCoords.x == occupiedCoordinates.x) && (boardCoords.y == occupiedCoordinates.y)) {
-                boardTile.classList.add('ship');
+                if (player == 'player1') {
+                    boardTile.classList.add('ship');
+                };
             };
         };
     };

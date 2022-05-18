@@ -37,7 +37,7 @@ const spawnShip = (board, shipStock) => {
     board.placeShip(ship, direction.value, x, y);
     //Call renderShip(occupiedCoords), to render the ship
     const boardTiles1 = document.querySelectorAll('.boards-container > div:nth-child(1) > div');
-    renderShips(board, boardTiles1);
+    renderShips(board, boardTiles1, 'player1');
 };
 
 const spawnComputerShips = (board, shipStock) => {
@@ -67,7 +67,7 @@ const spawnComputerShips = (board, shipStock) => {
             shipPlacement == 'ship placed';
         };
         const boardTiles2 = document.querySelectorAll('.boards-container > div:nth-child(2) > div');
-        renderShips(board, boardTiles2);
+        renderShips(board, boardTiles2, 'computer');
     };
 };
 
